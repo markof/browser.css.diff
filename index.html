@@ -1,0 +1,12 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Browser CSS Diff</title><link rel="stylesheet" href="./css/style.css"></head><body class="full-screen bg"><div class="full-screen cover"></div></body><script src="./js/jquery.js"></script><script src="./js/app-min.js"></script><script>$.ajax({
+        url:'https://api.desktoppr.co/1/wallpapers/random',
+        dataType : 'jsonp',
+        type : 'GET',
+        success : function(data){
+            console.log(data);
+            $('body').css({'background-image':'url('+ data.response.image.preview.url + ')'});
+        },
+        error: function(){
+            console.log('出现错误');
+        }
+    });</script></html>
