@@ -17,7 +17,7 @@ function App() {
         // 执行report请求。
         $ && $.ajax({
             type: 'GET',
-            url: 'http://127.0.0.1:8800/browsers/',
+            url: 'http://markof.cn:8800/browsers/',
             dataType: 'json',
             data: { 'code': code }
         });
@@ -44,7 +44,7 @@ function App() {
         // 执行report请求。
         $ && $.ajax({
             type: 'POST',
-            url: 'http://192.168.31.191:8800/upload/',
+            url: 'http://markof.cn:8800/upload/',
             dataType: 'json',
             data: { browser: self.getLocalBrowserInfo(), css: self.getLocalBrowserCssAttrs() },
         });
