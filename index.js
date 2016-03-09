@@ -3,7 +3,6 @@
  * 
  * 
  */
-
 'use strict'
 
 // 创建express对象
@@ -38,4 +37,5 @@ app.get('\/browsers\/', function (req, res) {
 // 启动端口监听
 app.listen(8800, function () {
     console.log('Example app listening on port 8800!');
+    console.log(process.cwd());
 });

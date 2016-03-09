@@ -31,10 +31,12 @@ let map = {
 
     // 用于保存map数据到文件中
     save: function() {
+        
+        // [debug用]
         console.log('[map.save]this:', this.browsers);
+        
         let fd = fs.openSync(this.path, 'w');
         fs.writeFile(this.path, JSON.stringify(this.browsers), 'utf8', function(err) {
-            console.log('[map.save]err:', err);
             fs.close(fd);
         });
     },
