@@ -11,7 +11,8 @@ const bodyParser = require('body-parser');
 const browserManager = require('./browsermanager.js');
 
 // 初始化
-browserManager.init('./browsers/map.json',function(err){
+browserManager.init('./browsers/map.json', function(err) {
+    console.log('init browermanager');
     if (err) console.log(err);
 });
 
@@ -23,19 +24,57 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // 路由创建-上传浏览器信息
-app.post('\/upload\/', function (req, res) {
+app.post('\/upload\/', function(req, res) {
     let browserinfo = req.body.browser;
     let cssinfo = req.body.css;
-    browserManager.addBrowser(browserinfo,cssinfo);
+    browserManager.addBrowser(browserinfo, cssinfo);
+
+    // 无论怎样都返回成功。
+    res.end('{\'error\':\'false\'}');
 });
 
+// // 路由创建-支持同时请求多个浏览器的信息。
+// app.post('\/browser\/',function(req,res){
+//     let browsers = req.body;
+//     if (Array.isArray(browsers)){
+//         let validFlag = false;
+//         for (let item in browser){
+//             if (item.hasOwnProperty('family') &&
+//                 item.hasOwnProperty('platform') &&
+//                 item.hasOwnProperty('version')){
+//                 validFlag = true;
+//             }{
+//                 validFlag = false;f
+//                 break;
+//             }
+//         }
+//         if (validFlag == true){}
+//     }
+// });
+
 // 路由创建-获取浏览器信息
-app.get('\/browsers\/', function (req, res) {
+app.get('\/browser\/', function(req, res) {
     let query = req.query;
+    // 检查参数是否符合要求。
+    if (req.query.hasOwnProperty('family') &&
+        req.query.hasOwnProperty('platform') &&
+        req.query.hasOwnProperty('version')) {
+        browserManager.getBrowser(req.query.platform, req.query.family, req.query.version,function(err,data){
+            if (err) res.send('{\'error\':\'true\', \'errocode\':'+ err +'}');
+            else res.send(data);
+        });
+    }
+    else {
+        res.send('{\'error\':\'true\', \'errocode\':\'parameter is invalid.\'}');
+    }
+});
+
+// 获取浏览器列表
+app.get('\/browser\/list\/', function(req, res) {
+    res.send(JSON.stringify(browserManager.getBrowserList()));
 });
 
 // 启动端口监听
-app.listen(8800, function () {
+app.listen(8800, function() {
     console.log('Example app listening on port 8800!');
-    console.log(process.cwd());
 });

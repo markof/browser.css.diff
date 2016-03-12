@@ -31,10 +31,10 @@ let map = {
 
     // 用于保存map数据到文件中
     save: function() {
-        
+
         // [debug用]
         console.log('[map.save]this:', this.browsers);
-        
+
         let fd = fs.openSync(this.path, 'w');
         fs.writeFile(this.path, JSON.stringify(this.browsers), 'utf8', function(err) {
             fs.close(fd);
@@ -59,6 +59,15 @@ let map = {
         else {
             // 存在重复。
         }
+    },
+
+    get: function(platform, family, version) {
+        if (this.browsers[platform] && this.browsers[platform][family] && this.browsers[platform][family][version]) {
+            return this.browsers[platform][family][version];
+        }
+        else {
+            return null;
+        }
     }
 };
 
@@ -72,6 +81,7 @@ exports.init = function(mapPath, cb) {
             // [todo]json转换的错误处理
             map.browsers = JSON.parse(data);
             map.path = mapPath;
+            console.log('[exports.init]map is:',map);
             // 调用回调函数
             cb(err);
         });
@@ -99,6 +109,52 @@ exports.addBrowser = function(browserInfo, cssInfo) {
     // else {
     //     console.log('[browser]浏览器信息不符合标准，浏览器信息：', browserInfo);
     // }
+};
+
+exports.getBrowser = function(platform, family, version, cb) {
+    let file =  map.get(platform, family, version);
+    if (file && typeof(cb) == 'function'){
+        fs.readFile(file,(err, data) => {
+            cb(err,data);
+        });
+    }
+    else {
+        cb(new Error('resource not found.'),null);
+    }
+};
+
+/**导出浏览器的所有信息
+ * [{platform:[
+ *      {code: 'MacIntel', browsers:[
+ *          {code: 'chrome', versions:[
+ *              {code:1.0.0}
+ *          ]}
+ *      ]}
+ * ]}]
+ */
+
+exports.getBrowserList = function() {
+    console.log('[exports.getBrowserList]map is:',map);
+    let result = {};
+    let platforms = [];
+    for (let platform in map.browsers) {
+        let platformItem = { 'code': platform };
+        let browsers = [];
+        for (let browser in map.browsers[platform]) {
+            let browserItem = { 'code': browser };
+            let versions = [];
+            for (let version in map.browsers[platform][browser]) {
+                let versionItem = { 'code': version };
+                versions.push(versionItem);
+            }
+            browserItem['versions'] = versions;
+            browsers.push(browserItem);
+        }
+        platformItem['browsers'] = browsers;
+        platforms.push(platformItem);
+    }
+    result['platform'] = platforms;
+    return result;
 }
 
 // 保存浏览器对象
