@@ -1,12 +1,1 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Browser CSS Diff</title><link rel="stylesheet" href="./css/style.css"></head><body class="full-screen bg"><div class="full-screen cover"></div></body><script src="./js/jquery.js"></script><script src="./js/app-min.js"></script><script>$.ajax({
-        url:'https://api.desktoppr.co/1/wallpapers/random',
-        dataType : 'jsonp',
-        type : 'GET',
-        success : function(data){
-            console.log(data);
-            $('body').css({'background-image':'url('+ data.response.image.preview.url + ')'});
-        },
-        error: function(){
-            console.log('出现错误');
-        }
-    });</script></html>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><title>Browser CSS Diff</title><link rel="stylesheet" href="./css/style.css"></head><body class="full-screen central-cover-bg"><div class="full-screen cover"><header class="header clearfix"><div class="logo">CSS DIFF</div><ul class="nav"><li class="nav-item">豆芽FM</li><li class="nav-item"><a href="http://nav.markof.cn">前端导航</a></li></ul><div class="bs-nav"><i class="iconfont icon-menu"></i></div></header><div class="browserSelector"><div class="selectorTitle">请选择要比较的浏览器</div><div class="browsers clearfix autoWx"><div class="browser"><i class="iconfont icon-plus"></i></div><div class="browser"><i class="iconfont icon-plus"></i></div><div class="browser"><i class="iconfont icon-plus"></i></div><div class="browser"><i class="iconfont icon-plus"></i></div></div><div class="confirm"><i class="iconfont icon-true"></i> 开始比较</div></div><div class="table clearfix"></div><footer class="footer clearfix"></footer></div></body><script src="./js/jquery-min.js"></script><script src="./js/tap-min.js"></script><script src="./js/browser-min.js"></script><script src="./js/wallpaper-min.js"></script><script src="./js/interactiv-min.js"></script></html>
