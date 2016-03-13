@@ -33,7 +33,7 @@ let map = {
     save: function() {
 
         // [debug用]
-        console.log('[map.save]this:', this.browsers);
+        // console.log('[map.save]this:', this.browsers);
 
         let fd = fs.openSync(this.path, 'w');
         fs.writeFile(this.path, JSON.stringify(this.browsers), 'utf8', function(err) {
