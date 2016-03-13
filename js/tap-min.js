@@ -1,0 +1,1 @@
+!function(t){t.fn.tap=function(n){var o=this,e=!1;t(o).on("touchstart",function(t){t.preventDefault(),e=!0,setTimeout(function(){e=!1},200)}),t(o).on("touchend",function(t){e&&(t.preventDefault(),t.stopPropagation(),n.apply(t.target))})}}(jQuery);
