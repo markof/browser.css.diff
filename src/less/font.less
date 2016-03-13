@@ -1,0 +1,83 @@
+/**
+ * 1. 防止元素中「font-family」不能继承
+ * 2. 西文字体和 OS X 字体写在前面
+ * 3. Opera 12.1 之前版本不支持中文字体的英文名称
+ * 4. 微软雅黑「\5FAE\8F6F\96C5\9ED1」,中易宋体「\5B8B\4F53」
+ */
+body,
+button, /* 1 */
+input, /* 1 */
+select, /* 1 */
+textarea  /* 1 */{
+    font-family: 'helvetica neue',arial,'hiragino sans gb',stheiti,'wenquanyi micro hei','\5FAE\8F6F\96C5\9ED1','\5B8B\4F53',sans-serif;
+}
+
+html{
+    // 定义了全局基准的字体大小
+    -webkit-text-size-adjust:none; 
+    font-size:20px;
+}
+
+body{
+    font-size: 0.2rem;
+    -webkit-font-smoothing: antialiased;
+}
+
+@font-face {
+    font-family: 'iconfont';
+    src: url('../font/iconfont.eot'); /* IE9*/
+    src: url('../font/iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../font/iconfont.woff') format('woff'), /* chrome、firefox */
+    url('../font/iconfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    url('../font/iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont{
+    font-family:"iconfont" !important;
+    font-size:16px;font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-true{
+    transition: all 0.8s ease-in-out;
+    &:before{
+        content: '\e604';
+    }  
+}
+
+.icon-false{
+    transition: all 0.8s ease-in-out;
+    &:before{
+        content: '\e602';
+    }  
+}
+
+.icon-menu{
+    transition: all 0.8s ease-in-out;
+    &:before{
+        content:'\e60b';
+    }
+}
+
+.icon-plus{
+    transition: all 0.8s ease-in-out;
+    &:before{
+        content: '\e606';
+    }  
+}
+
+.icon-right{
+    transition: all 0.8s ease-in-out;
+    &:before{
+        content: '\e609';
+    }  
+}
+
+.icon-left{
+    transition: all 0.8s ease-in-out;
+    &:before{
+        content: '\e608';
+    }  
+}

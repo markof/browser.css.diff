@@ -1,0 +1,27 @@
+{
+  "name": "browser.css.diff",
+  "version": "1.0.0",
+  "description": "collect css attrabute from the browser of users who visit this web site",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/markof/browser.css.diff.git"
+  },
+  "author": "markof",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/markof/browser.css.diff/issues"
+  },
+  "homepage": "https://github.com/markof/browser.css.diff#readme",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-cssmin": "^0.1.7",
+    "gulp-htmlmin": "^1.3.0",
+    "gulp-less": "^3.0.5",
+    "gulp-minify": "0.0.5",
+    "gulp-rev": "^7.0.0"
+  }
+}

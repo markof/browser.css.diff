@@ -1,0 +1,236 @@
+// 设置铺满全屏
+html ,
+.full-screen {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+// 设置背景的展示形式。
+.central-cover-bg{
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed !important;
+    background-position: center center;
+}
+
+// 整个文档的遮罩
+.cover{
+    display : block;
+    background-color: @bg-cover-color; 
+    
+    // 通过该方式压缩iphone的屏幕大小，使得背景可以只充满整个screen，而不是document
+    overflow-y: scroll;
+    
+    // 适配iphone上的滚动问题。
+    -webkit-overflow-scrolling : touch;
+}
+
+// 适配不兼容的浏览器
+header, 
+footer
+{
+    display: block;
+}
+
+.header,
+.footer,
+.autoWx{
+    .autoWx();
+}
+
+.header{
+    & > .bs-nav{
+        display: none;
+    }
+    
+    
+    @media (max-width: 480px){
+        position: relative;
+        & > .logo{
+            width: 100%;
+        }
+        
+        & > .nav{
+            display: none;
+        }
+        
+        & > .bs-nav{
+            position: absolute;
+            top: 2.3rem;
+            right: 1rem;
+            display: block;
+            
+            & > .iconfont{
+                font-size: 1.5rem;
+            }
+        }
+    }
+}
+
+.autoWx()
+{
+    @media screen {
+        margin: 0 auto;
+        @media (min-width: 1001px) {
+            width: 1000px;
+        }
+        @media (min-width: 721px) and (max-width : 1000px){
+            width: 720px;
+        }
+        @media (min-width: 481px) and (max-width:720px){
+            width:480px;
+        }
+        @media (max-width: 480px){
+            width :100%;
+            padding-left:5px;
+            padding-right:5px;
+            -webkit-box-sizing: border-box;
+            box-sizing:border-box;
+        }
+    }   
+}
+
+.table{        
+    & > .row{
+        
+        & > .col{
+            @media screen {
+                @media (min-width: 721px) and (max-width : 1000px){
+                    &:nth-child[5]{display: none};
+                    width: 25%;
+                }
+                @media (min-width: 481px) and (max-width:720px){
+                    &:nth-child[5]{display: none};
+                    &:nth-child[4]{display: none};
+                    width: 33.333%;
+                }
+                @media (max-width: 480px){
+                    &:nth-child[5]{display: none};
+                    &:nth-child[4]{display: none};
+                    &:nth-child[3]{display: none};
+                    width: 50%;
+                }
+            }
+        }
+    }
+}
+
+.browserSelector{
+    & > .browsers{
+        & > .browser{
+            @media screen {
+                @media (min-width:1001px){
+                    width: 25%;
+                }
+                @media (min-width: 721px) and (max-width : 1000px){
+                    &:nth-child(4){display: none};
+                    width: 33.333%;
+                }
+                @media (min-width: 481px) and (max-width:720px){
+                    &:nth-child(4){display: none};
+                    &:nth-child(3){display: none};
+                    width: 50%;
+                }
+                @media (max-width: 480px){
+                    &:nth-child(4){display: none};
+                    &:nth-child(3){display: none};
+                    &:nth-child(2){display: none};
+                    width: 100%;
+                }
+            } 
+        }
+    }
+}
+
+.more{
+    & > .body{
+        @media screen {
+            @media (min-width:1001px){
+                & > .arrow{
+                    left: 10%;
+                }
+                
+                & > .arrow-position-1-4{
+                    left: 12.5%;
+                }
+                
+                & > .arrow-position-2-4{
+                    left: 37.5%;
+                }
+                
+                & > .arrow-position-3-4{
+                    left: 62.5%;
+                }
+                
+                & > .arrow-position-4-4{
+                    left: 87.5%;
+                }
+            }
+            @media (min-width: 721px) and (max-width : 1000px){
+                
+                & > .arrow{
+                    left: 12.5%;
+                }
+                
+                & > .arrow-position-1-4{
+                    left: 16.666%;
+                }
+                
+                & > .arrow-position-2-4{
+                    left: 50%;
+                }
+                
+                & > .arrow-position-3-4{
+                    left: 83.333%;
+                }
+                
+                & > .arrow-position-4-4{
+                    left: 100%;
+                }
+            }
+            @media (min-width: 481px) and (max-width:720px){
+                & > .arrow{
+                    left: 16.666%;
+                }
+                
+                & > .arrow-position-1-4{
+                    left: 25%;
+                }
+                
+                & > .arrow-position-2-4{
+                    left: 75%;
+                }
+                
+                & > .arrow-position-3-4{
+                    left: 100%;
+                }
+                
+                & > .arrow-position-4-4{
+                    left: 100%;
+                }
+            }
+            @media (max-width: 480px){
+                & > .arrow{
+                    left:25%;
+                }
+                
+                & > .arrow-position-1-4{
+                    left: 50%;
+                }
+                
+                & > .arrow-position-2-4{
+                    left: 100%;
+                }
+                
+                & > .arrow-position-3-4{
+                    left: 100%;
+                }
+                
+                & > .arrow-position-4-4{
+                    left: 100%;
+                }
+            }
+        } 
+    }
+}
