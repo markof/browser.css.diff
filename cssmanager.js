@@ -5,7 +5,7 @@ let thisFolder = null;
 
 exports.init = function(folderPath){
     isDirectoryExist(folderPath, function(err, folder) {
-        if (err) callback(err);
+        if (err) console.log(err);
         else { thisFolder = folder; }
     });
 }
