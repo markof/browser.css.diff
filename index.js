@@ -8,12 +8,20 @@
 // 创建express对象
 const express = require('express');
 const bodyParser = require('body-parser');
+
+// 创建browser和css的管理对象
 const browserManager = require('./browsermanager.js');
+const cssManager = require('./cssManager.js');
 
 // 初始化
 browserManager.init('./browsers/map.json', function(err) {
     console.log('init browermanager');
     if (err) console.log(err);
+});
+
+cssManager.init('./css',function(err){
+    console.log('init cssManager');
+    if (err) console.log(err); 
 });
 
 // 创建express服务
@@ -37,18 +45,19 @@ app.post('\/upload\/', function(req, res) {
 app.get('\/browser\/', function(req, res) {
     // [todo]需要修改*为cssdiff.markof.cn,保证跨域cros可访问
     res.header("Access-Control-Allow-Origin", "http://cssdiff.markof.cn");
+    // res.header("Access-Control-Allow-Origin", "*");
     let query = req.query;
     // 检查参数是否符合要求。
     if (req.query.hasOwnProperty('family') &&
         req.query.hasOwnProperty('platform') &&
         req.query.hasOwnProperty('version')) {
         browserManager.getBrowser(req.query.platform, req.query.family, req.query.version,function(err,data){
-            if (err) res.send('{\'error\':\'true\', \'errocode\':'+ err +'}');
+            if (err) res.send('{\'error\':\'true\', \'errorcode\':'+ err +'}');
             else res.send(data);
         });
     }
     else {
-        res.send('{\'error\':\'true\', \'errocode\':\'parameter is invalid.\'}');
+        res.send('{\'error\':\'true\', \'errorcode\':\'parameter is invalid.\'}');
     }
 });
 
@@ -56,8 +65,24 @@ app.get('\/browser\/', function(req, res) {
 app.get('\/browser\/list\/', function(req, res) {
     // [todo]需要修改*为cssdiff.markof.cn,保证跨域cros可访问
     res.header("Access-Control-Allow-Origin", "http://cssdiff.markof.cn");
-    console.log('[app.get browser/list]','get request');
+    // res.header("Access-Control-Allow-Origin", "*");
     res.send(JSON.stringify(browserManager.getBrowserList()));
+});
+
+// 获取CSS条目
+app.get('\/css\/',function (req,res){
+    res.header("Access-Control-Allow-Origin", "http://cssdiff.markof.cn");
+    // res.header("Access-Control-Allow-Origin", "*");
+    let cssItem = typeof(req.query.css) == 'undefined' ? null : req.query.css;
+    if (cssItem){
+        cssManager.get(cssItem,function(err,data){
+            if (err) res.send('{\'error\':\'true\',\'errorcode\':\'internal error.\'}');
+            else res.send('{\'error\':\'false\',\'data\':\''+ data +'\'}')
+        });
+    }
+    else {
+        res.send('{\'error\':\'true\',\'errorcode\':\'parameter is invalid.\'}')
+    }
 });
 
 // 启动端口监听
