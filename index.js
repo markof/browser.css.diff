@@ -11,7 +11,7 @@ const bodyParser = require('body-parser');
 
 // 创建browser和css的管理对象
 const browserManager = require('./browsermanager.js');
-const cssManager = require('./cssManager.js');
+const cssManager = require('./cssmanager.js');
 
 // 初始化
 browserManager.init('./browsers/map.json', function(err) {
