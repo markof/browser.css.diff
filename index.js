@@ -33,6 +33,7 @@ app.use(bodyParser.json());
 
 // 路由创建-上传浏览器信息
 app.post('\/upload\/', function(req, res) {
+    res.header("Access-Control-Allow-Origin", "http://cssdiff.markof.cn");
     let browserinfo = req.body.browser;
     let cssinfo = req.body.css;
     browserManager.addBrowser(browserinfo, cssinfo);
@@ -45,7 +46,10 @@ app.post('\/upload\/', function(req, res) {
 app.get('\/browser\/', function(req, res) {
     // [todo]需要修改*为cssdiff.markof.cn,保证跨域cros可访问
     res.header("Access-Control-Allow-Origin", "http://cssdiff.markof.cn");
+<<<<<<< HEAD
     // res.header("Access-Control-Allow-Origin", "*");
+=======
+>>>>>>> refs/remotes/origin/server
     let query = req.query;
     // 检查参数是否符合要求。
     if (req.query.hasOwnProperty('family') &&
@@ -65,7 +69,11 @@ app.get('\/browser\/', function(req, res) {
 app.get('\/browser\/list\/', function(req, res) {
     // [todo]需要修改*为cssdiff.markof.cn,保证跨域cros可访问
     res.header("Access-Control-Allow-Origin", "http://cssdiff.markof.cn");
+<<<<<<< HEAD
     // res.header("Access-Control-Allow-Origin", "*");
+=======
+    console.log('[app.get browser/list]','get request');
+>>>>>>> refs/remotes/origin/server
     res.send(JSON.stringify(browserManager.getBrowserList()));
 });
 
