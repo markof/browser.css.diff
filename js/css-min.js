@@ -1,0 +1,1 @@
+function Css(){this.get=function(o,r){console.log(o),$.ajax({url:"http://127.0.0.1:8800/css/",dataType:"json",data:{css:o},success:function(o){"false"===o.error?r(null,o.data):r(new Error(o.errorcode))},error:function(o){r(o)}})}}
