@@ -1,5 +1,6 @@
 
 var browser = new Browser();
+var css = new Css();
 
 $(document).ready(function() {
     // 初始化Wallpaper对象
@@ -65,8 +66,9 @@ function initSelectComfirmClickDelegate() {
             }
             else if (item.valid) {
                 validItemCount++;
+                // [todo]这里需要合并到browser对象中。
                 $.ajax({
-                    url: 'http://127.0.0.1:8800/browser/',
+                    url: 'http://markof.cn:8800/browser/',
                     data: { 'platform': item.platform, 'family': item.family, 'version': item.version },
                     dataType: 'json',
                     success: function(data) {
@@ -309,17 +311,31 @@ function initBrowserSelectorClickDelegate() {
 }
 
 function initTableClickDelegate() {
-    var moreItem = $('<div class="more"><div class="body"><div class="arrow"></div><div class="">等待添加内容...</div></div></div>');
+    var moreItem = $('<div class="more"></div>');
+    var body = $('<div class="body"></div>');
+    var arrow = $('<div class="arrow"></div>');
+    var content = $('<div><div>');
+    moreItem.append(body);
+    body.append(arrow);
+    body.append(content);
+    
+    console.log(moreItem);
     var lastRow = null;
     moreItem.hide();
     $('.table').delegate('.col-title', 'click', function() {
-        var target = this;
+        var target = $(this);
         lastRow && lastRow.removeClass('active');
-        lastRow = $(target).parent();
+        lastRow = target.parent();
         lastRow.addClass('active');
+
         moreItem.slideUp(function() {
-            $(target).parent().after(moreItem);
+            target.parent().after(moreItem);
             moreItem.slideDown();
+        });
+        
+        css.get(target.html(),function(err, data){
+            if (err) content.html('内容待补充...');
+            else content.html(data);
         });
     });
 }

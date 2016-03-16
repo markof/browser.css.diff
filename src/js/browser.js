@@ -34,8 +34,8 @@ function Browser() {
         // 执行report请求。
         $ && $.ajax({
             type: 'POST',
-            url: 'http://192.168.31.191:8800/upload/',
-            dataType: 'jsonp',
+            url: 'http://markof.cn:8800/upload/',
+            dataType: 'json',
             data: { browser: self.getLocalBrowserInfo(), css: self.getLocalBrowserCssAttrs() },
         });
     }
@@ -45,7 +45,8 @@ function Browser() {
         var self = this;
         $ && $.ajax({
             type: 'GET',
-            url : 'http://192.168.31.191:8800/browser/list',
+            url : 'http://markof.cn:8800/browser/list',
+            // url:'http://127.0.0.1:8800/browser/list',
             dataType : 'json',
             success:function(data){
                 console.log(data);
