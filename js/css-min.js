@@ -1,1 +1,1 @@
-function Css(){this.get=function(r,s){$.ajax({url:"http://markof.cn:8800/css/",dataType:"json",data:{css:r},success:function(r){"false"===r.error?s(null,r.data):s(new Error(r.errorcode))},error:s(err)})}}
+function Css(){this.get=function(r,s){$.ajax({url:"http://markof.cn:8800/css/",dataType:"json",data:{css:r},success:function(r){"false"===r.error?s(null,r.data):s(new Error(r.errorcode))},error:s})}}
