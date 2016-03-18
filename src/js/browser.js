@@ -45,8 +45,8 @@ function Browser() {
         var self = this;
         $ && $.ajax({
             type: 'GET',
-            // url : 'http://markof.cn:8800/browser/list',
-            url:'http://127.0.0.1:8800/browser/list',
+            url : 'http://markof.cn:8800/browser/list',
+            // url:'http://127.0.0.1:8800/browser/list',
             dataType : 'json',
             success:function(data){
                 console.log(data);
