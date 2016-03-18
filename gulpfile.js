@@ -59,6 +59,10 @@ gulp.task('webtask',function(){
     // 处理字体文件
     gulp.src('src/font/*.*')
         .pipe(gulp.dest('../web/font/'));
+    
+    // 处理安全背景
+    gulp.src('src/img/safebackground.jpg')
+        .pipe(gulp.dest('../web/img/'));
 });
 
 gulp.watch('src/**/*.*', ['webtask']);

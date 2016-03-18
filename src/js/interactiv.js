@@ -335,7 +335,7 @@ function renderCssTable(validResult) {
             versionTitleRow.append('<div class="col">' + item.version + '</div>');
         }
     });
-    
+
     $('.table').html('<div class="reSelect"><i class="iconfont icon-true"></i> 重新选择</div>');
     $('.table').append(platformTitleRow);
     $('.table').append(familyTitleRow);
@@ -368,23 +368,30 @@ function renderCssTable(validResult) {
 }
 
 function initWallpaper() {
+    var safeBackgoundImageUrl = 'http://cssdiff.markof.cn/img/safebackground.jpg';
     var bg = new wallpaper();
     bg.getRandomWallpaper(function(err, data) {
-        if (err) return;
-        var img = new Image();
-        img.onload = function() { //图片下载完毕时异步调用callback函数。
-            $('.cover').css({ 'background-color': 'rgba(0,0,0,1)' });
-            $('body').css({ 'background-image': 'url(' + data.response.image.preview.url + ')' });
-            var alpha = 100;
-            var instans = setInterval(function() {
-                $('.cover').css({ 'background-color': 'rgba(0,0,0,' + alpha / 100 + ')' });
-                alpha--;
-                if (alpha < 65) {
-                    clearInterval(instans);
-                }
-            }, 100);
-        };
-        img.onerror = function(err) { console.log(err); }
-        img.src = data.response.image.preview.url;
+        if (err) {
+            fadinBackground(safeBackgoundImageUrl);
+        }
+        else {
+            var img = new Image();
+            img.src = data.response.image.preview.url;
+            img.onload = fadinBackground(data.response.image.preview.url);
+            img.onerror = function(err) { fadinBackground(safeBackgoundImageUrl); }
+        }
     });
+}
+
+function fadinBackground(url) {
+    $('.cover').css({ 'background-color': 'rgba(0,0,0,1)' });
+    $('body').css({ 'background-image': 'url(' + url + ')' });
+    var alpha = 100;
+    var instans = setInterval(function() {
+        $('.cover').css({ 'background-color': 'rgba(0,0,0,' + alpha / 100 + ')' });
+        alpha--;
+        if (alpha < 65) {
+            clearInterval(instans);
+        }
+    }, 100);
 }

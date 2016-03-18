@@ -7,7 +7,7 @@ function wallpaper() {
         // 检查cb是否是回调函数。这里约定回调函数的第一个参数总是Error对象。
         var callback = (typeof (cb) == 'function') ? cb : null;
         getWallpaper('random', function(err, data) {
-            if (err) callback && callback(null, data);
+            if (err) callback && callback(err, data);
             else {
                 this.randomWallpaper = data;
                 callback && callback(null, data);
@@ -41,7 +41,7 @@ function wallpaper() {
             dataType: 'jsonp',
             type: 'GET',
             success: function(data) { cb && cb(null, data); },
-            error: function() { cb && cb(new Error('can not get wallpaper'), null); }
+            error: function() { cb && cb(new Error('can not get wallpaper')); }
         });
     }
 }
