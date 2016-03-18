@@ -18,6 +18,16 @@ $(document).ready(function() {
     initSelectComfirmClickDelegate();
 });
 
+window.onpopstate = function(event) {
+    console.log('onpopstate');
+    console.log(event.state);
+    if (event.state.state === 'select') {
+        $('.table').hide();
+        $('.browserSelector').show();
+    } else if (event.state.state === 'table') {
+        renderCssTable(event.state.obj)
+    }
+};
 
 function initSelectComfirmClickDelegate() {
     $('.browserSelector .confirm').on('click', confirmDelegate);
@@ -93,72 +103,6 @@ function initSelectComfirmClickDelegate() {
         if (validItemCount == 0) {
             renderCssTable(browsersWithCss);
         }
-    }
-
-    function unique(array) {
-        var n = [];//临时数组
-        for (var i = 0; i < array.length; i++) {
-            if (n.indexOf(array[i]) == -1) n.push(array[i]);
-        }
-        return n;
-    }
-
-    function renderCssTable(validResult) {
-        // [todo]这里会引入一个undifined元素。
-        var allCss = [];
-        var validCount = 0;
-        validResult.map(function(item) {
-            allCss = allCss.concat(item.css);
-            if (item.valid){
-                validCount++;
-            }
-        });
-
-        // 去重
-        allCss = unique(allCss);
-        
-        // 去掉引入的undifined元素。
-        // [todo]非常dirty的做法
-        allCss.shift();
-
-        var platformTitleRow = $('<div class="row row-title"></div>');
-        var familyTitleRow = $('<div class="row row-title"></div>');
-        var versionTitleRow = $('<div class="row row-title"></div>');
-        
-        platformTitleRow.append('<div class="col">平台</div>');
-        familyTitleRow.append('<div class="col">浏览器</div>');
-        versionTitleRow.append('<div class="col">版本</div>');
-        
-        validResult.map(function(item) {
-            if (item.valid){
-                platformTitleRow.append('<div class="col">' + item.platform + '</div>');
-                familyTitleRow.append('<div class="col">' + item.family + '</div>');
-                versionTitleRow.append('<div class="col">' + item.version + '</div>');
-            }
-        });
-
-        $('.table').append(platformTitleRow);
-        $('.table').append(familyTitleRow);
-        $('.table').append(versionTitleRow);
-        
-        allCss.map(function(cssItem){
-            var newRow = $('<div class="row"></div>');
-            newRow.append('<div class="col col-title">'+ cssItem +'</div>');
-            validResult.map(function(browserItem){
-                if(browserItem.valid){                    
-                    var flag = (browserItem.css.indexOf(cssItem) == -1) ? 'false':'true';
-                    newRow.append('<div class="col"><i class="iconfont icon-' + flag + '"></i></div>');
-                }
-            });
-            $('.table').append(newRow);
-        });
-
-        $('.browserSelector').fadeOut(function() {
-            var title = '请选择浏览器';
-            var url = './';
-            history.pushState('',title,url);
-            $('.table').fadeIn();
-        });
     }
 
     function selectionValidation() {
@@ -318,7 +262,7 @@ function initTableClickDelegate() {
     moreItem.append(body);
     body.append(arrow);
     body.append(content);
-    
+
     console.log(moreItem);
     var lastRow = null;
     moreItem.hide();
@@ -332,11 +276,76 @@ function initTableClickDelegate() {
             target.parent().after(moreItem);
             moreItem.slideDown();
         });
-        
-        css.get(target.html(),function(err, data){
+
+        css.get(target.html(), function(err, data) {
             if (err) content.html('内容待补充...');
             else content.html(data);
         });
+    });
+}
+
+function unique(array) {
+    var n = [];//临时数组
+    for (var i = 0; i < array.length; i++) {
+        if (n.indexOf(array[i]) == -1) n.push(array[i]);
+    }
+    return n;
+}
+
+function renderCssTable(validResult) {
+    // [todo]这里会引入一个undifined元素。
+    var allCss = [];
+    var validCount = 0;
+    validResult.map(function(item) {
+        allCss = allCss.concat(item.css);
+        if (item.valid) {
+            validCount++;
+        }
+    });
+
+    // 去重
+    allCss = unique(allCss);
+
+    // 去掉引入的undifined元素。
+    // [todo]非常dirty的做法
+    allCss.shift();
+
+    var platformTitleRow = $('<div class="row row-title"></div>');
+    var familyTitleRow = $('<div class="row row-title"></div>');
+    var versionTitleRow = $('<div class="row row-title"></div>');
+
+    platformTitleRow.append('<div class="col">平台</div>');
+    familyTitleRow.append('<div class="col">浏览器</div>');
+    versionTitleRow.append('<div class="col">版本</div>');
+
+    validResult.map(function(item) {
+        if (item.valid) {
+            platformTitleRow.append('<div class="col">' + item.platform + '</div>');
+            familyTitleRow.append('<div class="col">' + item.family + '</div>');
+            versionTitleRow.append('<div class="col">' + item.version + '</div>');
+        }
+    });
+
+    $('.table').append(platformTitleRow);
+    $('.table').append(familyTitleRow);
+    $('.table').append(versionTitleRow);
+
+    allCss.map(function(cssItem) {
+        var newRow = $('<div class="row"></div>');
+        newRow.append('<div class="col col-title">' + cssItem + '</div>');
+        validResult.map(function(browserItem) {
+            if (browserItem.valid) {
+                var flag = (browserItem.css.indexOf(cssItem) == -1) ? 'false' : 'true';
+                newRow.append('<div class="col"><i class="iconfont icon-' + flag + '"></i></div>');
+            }
+        });
+        $('.table').append(newRow);
+    });
+
+    $('.browserSelector').fadeOut(function() {
+        history.replaceState({ 'state': 'select' }, null);
+        history.pushState({ 'state': 'table', 'obj': validResult }, null, window.location.href + '?table');
+        $('.table').fadeIn();
     });
 }
 
