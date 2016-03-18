@@ -19,7 +19,7 @@ function wallpaper() {
     this.getWallpaperList = function(cb) {
         var callback = (typeof (cb) == 'function') ? cb : null;
         getWallpaper('list', function(err, data) {
-            if (err) callback && callback(null, data);
+            if (err) callback && callback(err, data);
             else {
                 this.wallpaperList = data;
                 callback && callback(null, data);
