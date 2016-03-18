@@ -78,8 +78,8 @@ function initSelectComfirmClickDelegate() {
                 validItemCount++;
                 // [todo]这里需要合并到browser对象中。
                 $.ajax({
-                    // url: 'http://markof.cn:8800/browser/',
-                    url: 'http://127.0.0.1:8800/browser/',
+                    url: 'http://markof.cn:8800/browser/',
+                    // url: 'http://127.0.0.1:8800/browser/',
                     data: { 'platform': item.platform, 'family': item.family, 'version': item.version },
                     dataType: 'json',
                     success: function(data) {
