@@ -1,6 +1,7 @@
 
 var browser = new Browser();
 var css = new Css();
+// var pushFlag = false;
 
 $(document).ready(function() {
     // 初始化Wallpaper对象
@@ -18,16 +19,15 @@ $(document).ready(function() {
     initSelectComfirmClickDelegate();
 });
 
-window.onpopstate = function(event) {
-    console.log('onpopstate');
-    console.log(event.state);
-    if (event.state.state === 'select') {
-        $('.table').hide();
-        $('.browserSelector').show();
-    } else if (event.state.state === 'table') {
-        renderCssTable(event.state.obj)
-    }
-};
+// window.onpopstate = function(event) {
+//     console.log(event.state);
+//     if (event.state.state === 'select') {
+//         $('.table').hide();
+//         $('.browserSelector').show();
+//     } else if (event.state.state === 'table') {
+//         renderCssTable(event.state.obj)
+//     }
+// };
 
 function initSelectComfirmClickDelegate() {
     $('.browserSelector .confirm').on('click', confirmDelegate);
@@ -78,7 +78,8 @@ function initSelectComfirmClickDelegate() {
                 validItemCount++;
                 // [todo]这里需要合并到browser对象中。
                 $.ajax({
-                    url: 'http://markof.cn:8800/browser/',
+                    // url: 'http://markof.cn:8800/browser/',
+                    url: 'http://127.0.0.1:8800/browser/',
                     data: { 'platform': item.platform, 'family': item.family, 'version': item.version },
                     dataType: 'json',
                     success: function(data) {
@@ -266,6 +267,14 @@ function initTableClickDelegate() {
     console.log(moreItem);
     var lastRow = null;
     moreItem.hide();
+
+    $('.table').delegate('.reSelect', 'click', function() {
+        $('.table').fadeOut(function() {
+            $('.browserSelector').fadeIn();
+        });
+    });
+
+
     $('.table').delegate('.col-title', 'click', function() {
         var target = $(this);
         lastRow && lastRow.removeClass('active');
@@ -293,6 +302,7 @@ function unique(array) {
 }
 
 function renderCssTable(validResult) {
+    console.log(validResult);
     // [todo]这里会引入一个undifined元素。
     var allCss = [];
     var validCount = 0;
@@ -325,7 +335,8 @@ function renderCssTable(validResult) {
             versionTitleRow.append('<div class="col">' + item.version + '</div>');
         }
     });
-
+    
+    $('.table').html('<div class="reSelect"><i class="iconfont icon-true"></i> 重新选择</div>');
     $('.table').append(platformTitleRow);
     $('.table').append(familyTitleRow);
     $('.table').append(versionTitleRow);
@@ -343,8 +354,15 @@ function renderCssTable(validResult) {
     });
 
     $('.browserSelector').fadeOut(function() {
-        history.replaceState({ 'state': 'select' }, null);
-        history.pushState({ 'state': 'table', 'obj': validResult }, null, window.location.href + '?table');
+        // if (pushFlag == false) {
+
+        //     console.log('push state');
+        //     history.replaceState({ 'state': 'select' }, null);
+        //     history.pushState({ 'state': 'table', 'obj': validResult }, null, window.location.href);
+        //     pushFlag = true;
+        // } else {
+        //     history.replaceState({ 'state': 'table', 'obj': validResult },null);
+        // }
         $('.table').fadeIn();
     });
 }

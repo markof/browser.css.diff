@@ -60,6 +60,32 @@ select{
     font-weight: 200;
     // border-top: 1px solid @body-font-color;
     // border-right: 1px solid @body-font-color;
+    & > .reSelect{
+        margin-top:1rem;
+        font-size:0.8rem;
+        width: 10rem;
+        margin : 0.5rem auto;
+        height: 2rem;
+        text-align: center;
+        line-height: 2rem;
+        transition: all 0.8s ease-in-out;
+        
+        .icon-true{
+            color: @body-font-color;
+        }
+        
+        &:hover{
+            transition: all 0.8s ease-in-out;
+            color: @primary-alert-color;
+            cursor: pointer;
+            background-color: @table-bg-color;
+            
+            .iconfont{
+                color: @primary-alert-color;
+            }
+        }
+    }
+    
         
     & > .row{
         display: block;
